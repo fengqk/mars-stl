@@ -11,6 +11,7 @@ type (
 		Assign(elem T)
 		Fill(elem T)
 		Size() int
+		Capacity() int
 		Empty() bool
 		At(pos int) T
 		Insert(pos int, elem T)
@@ -28,7 +29,7 @@ func New[T any](size int) *Array[T] {
 }
 
 func Clone[T any](other *Array[T]) *Array[T] {
-	a := &Array[T]{elements: make([]T, other.Size(), other.Size())}
+	a := &Array[T]{elements: make([]T, other.Size(), other.Capacity())}
 	for i := range other.elements {
 		a.elements[i] = other.elements[i]
 	}
@@ -49,6 +50,10 @@ func (a *Array[T]) Fill(elem T) {
 
 func (a *Array[T]) Size() int {
 	return len(a.elements)
+}
+
+func (a *Array[T]) Capacity() int {
+	return cap(a.elements)
 }
 
 func (a *Array[T]) Empty() bool {
