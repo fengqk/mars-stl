@@ -1,6 +1,11 @@
 package array
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+var ErrorOutOfRange = errors.New("Out of Range")
 
 type (
 	Array[T any] struct {
@@ -62,14 +67,14 @@ func (a *Array[T]) Empty() bool {
 
 func (a *Array[T]) At(pos int) T {
 	if pos < 0 || pos >= len(a.elements) {
-		panic("out of array range index")
+		panic(ErrorOutOfRange)
 	}
 	return a.elements[pos]
 }
 
 func (a *Array[T]) Insert(pos int, elem T) {
 	if pos < 0 || pos >= len(a.elements) {
-		panic("out of array range index")
+		panic(ErrorOutOfRange)
 	}
 	a.elements[pos] = elem
 }

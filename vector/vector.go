@@ -1,6 +1,11 @@
 package vector
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
+
+var ErrorOutOfRange = errors.New("Out of Range")
 
 type (
 	Vector[T any] struct {
@@ -54,14 +59,14 @@ func (a *Vector[T]) Empty() bool {
 
 func (a *Vector[T]) At(pos int) T {
 	if pos < 0 || pos >= len(a.elements) {
-		panic("out of vector range index")
+		panic(ErrorOutOfRange)
 	}
 	return a.elements[pos]
 }
 
 func (a *Vector[T]) Insert(pos int, elem T) {
 	if pos < 0 || pos >= len(a.elements) {
-		panic("out of vector range index")
+		panic(ErrorOutOfRange)
 	}
 	a.elements = append(a.elements, elem)
 	for i := len(a.elements) - 1; i > pos; i-- {
@@ -76,7 +81,7 @@ func (a *Vector[T]) PushBack(elem T) {
 
 func (a *Vector[T]) PopBack() T {
 	if a.Empty() {
-		panic("out of vector range empty")
+		panic(ErrorOutOfRange)
 	}
 	elem := a.Back()
 	a.elements = a.elements[:len(a.elements)-1]
